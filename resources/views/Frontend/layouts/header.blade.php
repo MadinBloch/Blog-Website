@@ -69,11 +69,17 @@
 
 						<li><a href="{{ route('category')}}">Business</a></li>
 						<li><a href="{{ route('category')}}">Travel</a></li>
-						<li><a href="{{ route('category')}}">Design</a></li>
-						<li><a href="{{ route('category')}}">Culture</a></li>
+
+                        @if(!Auth::check())
+						<li><a href="{{ route('register')}}">Register</a></li>
+						<li><a href="{{ route('login')}}">Login</a></li>
+                        @elseif (Auth::check())
+						<li><a href="{{ route('login')}}">Dashorad</a></li>
+                        @endif
 					</ul>
 				</div>
 			</div>
 
 		</div>
 	</nav>
+
