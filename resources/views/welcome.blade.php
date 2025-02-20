@@ -27,9 +27,13 @@
 					<ul id="gtco-post-list">
 						<li class="full entry animate-box" data-animate-effect="fadeIn">
 							<a href="{{ route('single')}}">
-								<div class="entry-img" style="background-image: url(images/img_1.jpg"></div>
-								<div class="entry-desc">
-									<h3>How Web Hosting Can Impact Page Load Speed</h3>
+                                @if ($allblogs->isNotEmpty())
+                                <img src="{{ asset('storage/' . $allblogs->first()->image) }}" class="entry-img" alt="Blog Image">
+                            @endif
+                                <div class="entry-desc">
+                                    @if($allblogs->isnotEmpty())
+                                        <h3>{{ $allblogs->first()->title}}</h3>
+                                    @endif
 									<p>She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, t{{ route('single')}}en she continued her way.</p>
 								</div>
 							</a>

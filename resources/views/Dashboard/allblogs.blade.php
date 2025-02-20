@@ -19,18 +19,29 @@
                         <div class="card shadow-lg rounded-3 overflow-hidden">
                             <!-- Blog Image -->
                             <img src="{{ asset('storage/' . $blog->image) }}" class="card-img-top" alt="Blog Image" style="height: 200px; object-fit: cover;">
-
                             <div class="card-body">
+                                <a href="{{ route('editblog', $blog->id) }}">
                                 <!-- Blog Title -->
                                 <h5 class="card-title fw-bold">{{ $blog->title }}</h5>
                                 <!-- Blog Content (Short Preview) -->
                                 <p class="card-text text-muted">
                                     {{ Str::limit($blog->content, 100) }} <!-- Limits text to 100 characters -->
                                 </p>
-                                <!-- Read More Button -->
-                                <a href="#" class="btn btn-primary btn-sm">
-                                    Read More <i class="bi bi-arrow-right"></i>
-                                </a>
+                                <p class="card-text text-muted">
+                                    {{ $blog->created_at}}
+                                </p>
+
+                            </a>
+                               <form action="{{ route('deleteblog',$blog->id)}}" method="post">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $blog->id }}">
+                                <button type="submit" class="btn btn-danger btn-sm ml-6">
+                                    Delete <i class="bi bi-trash"></i>
+                                </button>
+
+                               </form>
+
+                               <a href="{{ route('editblog', $blog->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             </div>
                         </div>
                     </div>

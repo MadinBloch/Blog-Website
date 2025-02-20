@@ -11,6 +11,17 @@
           </ol>
         </nav>
       </div><!-- End Page Title -->
+
+      @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+
+      @endif
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -20,41 +31,57 @@
                 <h5 class="card-title">Write a New Blog</h5>
 
                 <!-- Blog Form -->
-                <form class="row g-3" action="{{route('creteblog')}}" method="post" enctype="multipart/form-data">
+                <form class="row g-3" action="{{ route('creteblog') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="col-md-12">
                         <label for="blogTitle" class="form-label">Blog Title</label>
-                        <input type="text" class="form-control" id="blogTitle" name="blogTitle" placeholder="Enter blog title">
+                        <input type="text" class="form-control @error('blogTitle') is-invalid @enderror"
+                               id="blogTitle" name="blogTitle" placeholder="Enter blog title" value="{{ old('blogTitle') }}">
+                        @error('blogTitle')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="blogCategory" class="form-label">Category</label>
-                        <select id="blogCategory" class="form-select" name="blogCategory">
-                            <option selected>Choose a category...</option>
-
-                            @foreach ($categories as $categorie )
-                                    <option value="{{ $categorie->id}}"> {{ $categorie->name}}</option>
+                        <select id="blogCategory" class="form-select @error('blogCategory') is-invalid @enderror" name="blogCategory">
+                            <option selected disabled>Choose a category...</option>
+                            @foreach ($categories as $categorie)
+                                <option value="{{ $categorie->id }}" {{ old('blogCategory') == $categorie->id ? 'selected' : '' }}>
+                                    {{ $categorie->name }}
+                                </option>
                             @endforeach
-
                         </select>
+                        @error('blogCategory')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="blogImage" class="form-label">Upload Thumbnail</label>
-                        <input type="file" class="form-control" id="blogImage" name="blogImage">
+                        <input type="file" class="form-control @error('blogImage') is-invalid @enderror" id="blogImage" name="blogImage">
+                        @error('blogImage')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="col-12">
                         <label for="blogContent" class="form-label">Blog Content</label>
-                        <textarea class="form-control" name="blogContent" id="blogContent" rows="6" placeholder="Write your blog here..."></textarea>
+                        <textarea class="form-control @error('blogContent') is-invalid @enderror" name="blogContent" id="blogContent" rows="6" placeholder="Write your blog here...">{{ old('blogContent') }}</textarea>
+                        @error('blogContent')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="blogStatus" class="form-label">Blog Status</label>
-                        <select id="blogStatus" class="form-select" name="blogStatus">
-                            <option selected>Draft</option>
-                            <option>Published</option>
+                        <select id="blogStatus" class="form-select @error('blogStatus') is-invalid @enderror" name="blogStatus">
+                            <option value="draft" {{ old('blogStatus') == 'draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="published" {{ old('blogStatus') == 'published' ? 'selected' : '' }}>Published</option>
                         </select>
+                        @error('blogStatus')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="text-center">
